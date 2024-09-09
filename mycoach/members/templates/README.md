@@ -1,0 +1,1 @@
+This is the templates directory for the memebers app.
