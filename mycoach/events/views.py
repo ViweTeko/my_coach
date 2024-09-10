@@ -83,8 +83,8 @@ def list_venues(request):
     {'venue_list': venue_list,
     'venue_page': venue_page})
 
-""" This searches for a venue """
 def search_venues(request):
+    """ This searches for a venue """
     if request.POST:
         searched = request.POST['searched']
         venues = Venue.objects.filter(name__icontains=searched)
