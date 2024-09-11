@@ -1,35 +1,72 @@
-""" This script is the forms file of Members app"""
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
 from django import forms
+from django.forms import ModelForm
+from .models import Venue, Event
 
-
-class RegisterUserForm(UserCreationForm):
-    """ This class registers users on the form"""
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    first_name = forms.CharField(max_length=60,
-    widget=forms.TextInput(
-        attrs={'class': 'form-control'}))
-    last_name = forms.CharField(max_length=60,
-    widget=forms.TextInput(
-        attrs={'class': 'form-control'}))
-
+class VenueForm(ModelForm):
+    """The form for the venue"""
     class Meta:
         """Meta class"""
-        model = User
-        fields = (
-        'username',
-        'first_name',
-        'last_name',
-        'email',
-        'password1',
-        'password2'
-        )
-    
-    def __init__(self, *args, **kwargs):
-        super(RegisterUserForm, self).__init__(*args, **kwargs)
+        model = Venue
+        fields = '__all__'
+        labels = {
+            'name': '',
+            'address': '',
+            'city': '',
+            'phone': '',
+            'zip_code': '',
+            'web': '',
+            'email': '',
+            'venue_image': '',
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Venue Name'}),
+            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Address'}),
+            'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number'}),
+            'zip_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Postal Code'}),
+            'web': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Web Address'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+        }
 
-        self.fields['username'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
+
+class AdminEventForm(ModelForm):
+    """ This is for Admin SuperUser event form"""
+    class Meta:
+        model = Event
+        fields = '__all__'
+        labels = {
+            'name': '',
+            'event_date': 'YYY-MM-DD HH:MM',
+            'venue': 'Venue',
+            'manager': 'Manager',
+            'attendees': 'Attendees',
+            'description': '',
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Event Name'}),
+            'event_date': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Event Date'}),
+            'venue': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Venue'}),
+            'manager': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Manager'}),
+            'attendees': forms.SelectMultiple(attrs={'class': 'form-control', 'placeholder': 'Attendees'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description'}),
+        }
+
+class EventForm(ModelForm):
+    """ This class is the event form for ordinary users"""
+    class Meta:
+        model = Event
+        fields = '__all__'
+        labels = {
+            'name': '',
+            'event_date': 'YYY-MM-DD HH:MM',
+            'venue': 'Venue',
+            'attendees': 'Attendees',
+            'description': '',
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Event Name'}),
+            'event_date': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Event Date'}),
+            'venue': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Venue'}),
+            'attendees': forms.SelectMultiple(attrs={'class': 'form-control', 'placeholder': 'Attendees'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description'}),
+        }
