@@ -1,0 +1,1 @@
+The events directory of the templates.
