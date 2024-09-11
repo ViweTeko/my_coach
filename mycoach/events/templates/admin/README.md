@@ -1,0 +1,1 @@
+This is the admin directory that is used in most pages.
