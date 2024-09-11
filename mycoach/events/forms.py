@@ -28,7 +28,6 @@ class RegisterUserForm(UserCreationForm):
         )
     
     def __init__(self, *args, **kwargs):
-        """Initializer of the forms"""
         super(RegisterUserForm, self).__init__(*args, **kwargs)
 
         self.fields['username'].widget.attrs['class'] = 'form-control'
