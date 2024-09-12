@@ -1,6 +1,8 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from .models import Venue, Event
 from .forms import VenueForm
+from django.urls import reverse
+
 
 class TestVenueModel(TestCase):
     """Test Venue Model."""
@@ -19,6 +21,7 @@ class TestVenueModel(TestCase):
     def test_venue_model_str(self):
         """Test venue model str."""
         self.assertEqual(str(self.venue), 'Venue 1')
+
 
 class TestEventModel(TestCase):
     """Test Event Model."""
@@ -45,7 +48,6 @@ class TestEventModel(TestCase):
     def test_event_model_str(self):
         """Test event model str."""
         self.assertEqual(str(self.event), 'Event 1')
-
 
 
 class TestVenueForm(TestCase):
@@ -113,3 +115,62 @@ class TestVenueForm(TestCase):
     def test_venue_description_is_optional(self):
         form = VenueForm({'description':''})
         self.assertTrue(form.is_valid())
+
+
+class TestViews(TestCase):
+    """Test Views."""
+
+    def setUp(self):
+        """Set up for test."""
+        self.client = Client()
+        self.venue1 = Venue.objects.create(
+            name = 'Venue 1',
+            address = 'Address 1',
+            zip_code = '12345',
+            phone = '1234567890',
+            web = 'www.venue1.com',
+            email_address = 'venue1@email.com'
+        )
+        self.event1 = Event.objects.create(
+            name = 'Event 1',
+            event_date = '2024-01-01',
+            venue = self.venue1,
+            manager = 'Manager 1',
+            attendees = 10,
+            description = 'Description 1'
+        )
+
+    def test_home_GET(self):
+        """Test home get."""
+        response = self.client.get(reverse('home'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'events/home.html')
+
+    def test_event_list_GET(self):
+        """Test event list get."""
+        response = self.client.get(reverse('list-events'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'events/event_list.html')
+
+    def test_add_venue_GET(self):
+        """Test add venue get."""
+        response = self.client.get(reverse('add-venue'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'events/add_venue.html')
+
+    def test_update_venue_GET(self):
+        """Test update venue get."""
+        response = self.client.get(reverse('update-venue', args=[self.venue1.id]))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'events/update_venue.html')
+
+    def test_update_event_GET(self):
+        """Test update event get."""
+        response = self.client.get(reverse('update-event', args=[self.event1.id]))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'events/update_event.html')
+
+    def test_delete_event_GET(self):
+        """Test delete event get."""
+        response = self.client.get(reverse('delete-event', args=[self.event1.id]))
+        self.assertEquals(response.status_code, 200)
