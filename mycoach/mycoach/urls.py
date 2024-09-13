@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls import settings
+from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -26,6 +26,6 @@ urlpatterns = [
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Configures Admin Titles:
-admin.site.site.site_header = "My Coach Admin"
+admin.site.site_header = "My Coach Admin"
 admin.site.site_title = "My Coach Admin Portal"
 admin.site.index_title = "Welcome to My Coach Portal"
