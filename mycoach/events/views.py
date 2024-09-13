@@ -34,7 +34,7 @@ def home(request, year=datetime.now().year, month=datetime.now() .strftime('%B')
         event_date__month = month_num
         )
     return render(request,
-    'events/home.html', {
+    'admin/home.html', {
         "name": name,
         "year": year,
         "month": month,
@@ -61,14 +61,14 @@ def add_venue(request):
         form = VenueForm()
         if 'submitted' in request.GET:
             submitted = True
-    return render(request, 'events/add_venue.html',
+    return render(request, 'venues/add_venue.html',
     {'form': form, 'submitted': submitted})
 
 def show_venue(request, venue_id):
     """ This shows a venue """
     venue = Venue.objects.get(pk=venue_id)
     venue_owner = User.objects.get(pk=venue.owner)
-    return render(request, 'events/show_venue.html',
+    return render(request, 'venues/show_venue.html',
     {'venue': venue,   
     'venue_owner': venue_owner})
 
@@ -79,7 +79,7 @@ def list_venues(request):
     p = Paginator(Venue.objects.all(), 10)
     page = request.GET.get('page')
     venue_page = p.get_page(page)
-    return render(request, 'events/venue.html',
+    return render(request, 'venues/venue.html',
     {'venue_list': venue_list,
     'venue_page': venue_page})
 
@@ -88,11 +88,11 @@ def search_venues(request):
     if request.POST:
         searched = request.POST['searched']
         venues = Venue.objects.filter(name__icontains=searched)
-        return render(request, 'events/search_venues.html',
+        return render(request, 'venues/search_venues.html',
         {'searched': searched,
         'venues': venues})
     else:
-        return render(request, 'events/search_venues.html',
+        return render(request, 'venues/search_venues.html',
         {})
 
 def update_venue(request, venue_id):
@@ -109,7 +109,7 @@ def update_venue(request, venue_id):
     else:
         form = VenueForm(instance=venue)
 
-    return render(request, 'events/update_venue.html',
+    return render(request, 'venues/update_venue.html',
     {'venue': venue,
     'form': form})
 
@@ -266,7 +266,7 @@ def admin_approval(request):
                     messages.success(request, 'Event has been approved')
                     return redirect('list-events')
                 else:
-                    return render(request, 'events/admin_approval.html',
+                    return render(request, 'admin/admin_approval.html',
                     {'event_list': event_list,
                     "event_count": event_count,
                     "venue_count": venue_count,
@@ -276,7 +276,7 @@ def admin_approval(request):
         messages.success(request, 'You are not authorized to view this page!')
         return redirect('home')
 
-    return render(request, 'events/admin_approval.html',
+    return render(request, 'admin/admin_approval.html',
                     {'event_list': event_list,
                     "event_count": event_count,
                     "venue_count": venue_count,
@@ -288,7 +288,7 @@ def venue_events(request, venue_id):
     venue = Venue.objects.get(id=venue_id)
     events = venue.event_set.all()
     if events:
-        return render(request, 'events/venue_events.html',
+        return render(request, 'venues/venue_events.html',
         {
             "events": events
         })
