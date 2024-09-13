@@ -108,10 +108,16 @@ def update_venue(request, venue_id):
         return HttpResponseRedirect('/list_venues')
     else:
         form = VenueForm(instance=venue)
-    
+
     return render(request, 'events/update_venue.html',
     {'venue': venue,
     'form': form})
+
+def delete_venue(request, venue_id):
+    """This deletes a venue"""
+    venue = Venue.objects.get(pk=venue_id)
+    venue.delete()
+    return redirect('list-venues')
 
 # EVENTS
 def all_events(request):
@@ -169,12 +175,6 @@ def delete_event(request, event_id):
     else:
         messages.success(request, 'You are not authorized to delete this event!')
         return redirect('list-events')
-
-def delete_venue(request, venue_id):
-    """This deletes a venue"""
-    venue = Venue.objects.get(pk=venue_id)
-    venue.delete()
-    return redirect('list-venues')
 
 def my_events(request):
     """ This shows my events """

@@ -62,6 +62,7 @@ class EventForm(ModelForm):
             'venue': 'Venue',
             'attendees': 'Attendees',
             'description': '',
+            'venue_image': '',
         }
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Event Name'}),
