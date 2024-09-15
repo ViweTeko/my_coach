@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-arf4681#05ntg1j6^u1rua47o5yf%+^5fxld9sbsgr_0=)q@ns
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '8000-idx-mycoachgit-1725684632282.cluster-ve345ymguzcd6qqzuko2qbxtfe.cloudworkstations.dev',
+]
 
 
 # Application definition
@@ -139,3 +141,7 @@ LOGOUT_REDIRECT_URL = 'home'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-idx-mycoachgit-1725684632282.cluster-ve345ymguzcd6qqzuko2qbxtfe.cloudworkstations.dev',
+]
