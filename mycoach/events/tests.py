@@ -144,7 +144,7 @@ class TestViews(TestCase):
         """Test home get."""
         response = self.client.get(reverse('home'))
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'events/home.html')
+        self.assertTemplateUsed(response, 'admin/home.html')
 
     def test_event_list_GET(self):
         """Test event list get."""
@@ -156,13 +156,13 @@ class TestViews(TestCase):
         """Test add venue get."""
         response = self.client.get(reverse('add-venue'))
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'events/add_venue.html')
+        self.assertTemplateUsed(response, 'veunes/add_venue.html')
 
     def test_update_venue_GET(self):
         """Test update venue get."""
         response = self.client.get(reverse('update-venue', args=[self.venue1.id]))
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'events/update_venue.html')
+        self.assertTemplateUsed(response, 'venues/update_venue.html')
 
     def test_update_event_GET(self):
         """Test update event get."""

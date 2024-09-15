@@ -64,7 +64,7 @@ def add_venue(request):
     return render(request, 'venues/add_venue.html',
     {'form': form, 'submitted': submitted})
 
-def show_venue(request, venue_id):
+def show_venue(request, venue_id) -> render:
     """ This shows a venue """
     venue = Venue.objects.get(pk=venue_id)
     venue_owner = User.objects.get(pk=venue.owner)
@@ -72,7 +72,7 @@ def show_venue(request, venue_id):
     {'venue': venue,   
     'venue_owner': venue_owner})
 
-def list_venues(request):
+def list_venues(request) -> render:
     """ This shows a list of venues """
     venue_list = Venue.objects.all()
 
@@ -83,7 +83,7 @@ def list_venues(request):
     {'venue_list': venue_list,
     'venue_page': venue_page})
 
-def search_venues(request):
+def search_venues(request) -> render:
     """ This searches for a venue """
     if request.POST:
         searched = request.POST['searched']
@@ -113,14 +113,14 @@ def update_venue(request, venue_id):
     {'venue': venue,
     'form': form})
 
-def delete_venue(request, venue_id):
+def delete_venue(request, venue_id) -> redirect:
     """This deletes a venue"""
     venue = Venue.objects.get(pk=venue_id)
     venue.delete()
     return redirect('list-venues')
 
 # EVENTS
-def all_events(request):
+def all_events(request) -> render:
     """This is the list of events"""
     event_list = Event.objects.all().order_by('event_date')
     return render(request, 'events/event_list.html',
@@ -187,7 +187,7 @@ def my_events(request):
         messages.success(request, 'You are not authorized to view this page!')
         return redirect('home')
 
-def search_events(request):
+def search_events(request) -> render:
     """ This searches for an event """
     if request.POST:
         searched = request.POST['searched']
@@ -201,7 +201,7 @@ def search_events(request):
 
 # VENUE Downloads
 
-def venue_text(request):
+def venue_text(request) -> response:
     """ This will generate Text File List"""
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename="venue_list.txt"'
@@ -210,7 +210,7 @@ def venue_text(request):
         response.write(venue.name + '\n')
     return response
 
-def venue_csv(request):
+def venue_csv(request) -> response:
     """ This will generate Comma Separated Values (CSV) file"""
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="venue_list.csv"'
@@ -222,7 +222,7 @@ def venue_csv(request):
         writer.writerow(venue.name, venue.address, venue.zip_code, venue.web, venue.phone)
     return response
 
-def venue_pdf(request):
+def venue_pdf(request) FileResponse:
     """This will generate PDF file"""
     buf = io.BytesIO()
     c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
@@ -296,7 +296,7 @@ def venue_events(request, venue_id):
         messages.success(request, ("That Venue Has No Events At All!"))
         return redirect('admin-approval')
     
-def show_event(request):
+def show_event(request) -> render:
     """This will show an event"""
     event = Event.objects.get(pk=event_id)
     return render(request, 'events/show_event.html', 
