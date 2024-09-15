@@ -24,7 +24,7 @@ def login_user(request):
     else:
         return render(request, 'authenticate/login.html', {})
 
-def logout_user(request):
+def logout_user(request) -> redirect:
     """This logs out the user"""
     logout(request)
     messages.success(request, 'Logged out successfully!')
