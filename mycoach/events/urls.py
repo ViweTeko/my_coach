@@ -23,4 +23,6 @@ urlpatterns = [
     path('venue_csv/', views.venue_csv, name="venue_csv"),
     path('venue_pdf/', views.venue_pdf, name="venue_pdf"),
     path('admin_approval/', views.admin_approval, name="admin-approval"),
+    path('contact_us/', views.contact_us, name="contact-us"),
+    path('contact_success/', views.contact_success, name="contact-success"),
 ]

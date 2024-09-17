@@ -296,8 +296,29 @@ def venue_events(request, venue_id):
         messages.success(request, ("That Venue Has No Events At All!"))
         return redirect('admin-approval')
     
-def show_event(request) -> render:
+def show_event(request):
     """This will show an event"""
     event = Event.objects.get(pk=event_id)
     return render(request, 'events/show_event.html', 
     {'event': event})
+
+def contact_us(request):
+    """This will contact us"""
+  if request.method == 'POST':
+    name = request.POST.get('name')
+    email = request.POST.get('email')
+    message = request.POST.get('message')
+    # Send email
+    send_mail(
+        'Contact Form Submission',
+        f'Name: {name}\nEmail: {email}\n\n{message}',
+        email,
+        ['iamviwe.teko@gmail.com'],
+        fail_silently=False,
+    )
+    return redirect('contact_success') # Redirects to success page
+  return render(request, 'admin/contact_us.html')
+
+def contact_success(request):
+    """This will show a success message"""
+    return render(request, 'admin/contact_success.html')
