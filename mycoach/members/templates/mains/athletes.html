@@ -1,0 +1,50 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+
+<center>
+  <div class="shadow p-4 mb-5 bg-body rounded">
+      <h1>Athletes</h1>
+
+        <form>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Club</th>
+                        <th>Event</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                        {% for member in members %}
+                        <tr>
+                            <td>{{ member.0 }}</td>
+                            <td>{{ member.1 }}</td>
+                            <td>{{ member.2 }}</td>
+                            <td>{{ member.3 }}</td>
+                            <td>{{ member.4 }}</td>
+                            <td>{{ member.5 }}</td>
+                            <td>{{ member.6 }}</td>
+                            <td>{{ member.7 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                    
+        </form>
+  </div>      
+
+
+<br></br>
+
+
+<br/><br/><br/>
+
+</center>
+
+{% endblock %}

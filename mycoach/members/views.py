@@ -48,3 +48,14 @@ def register_user(request):
     return render(request, 'authenticate/register_user.html', {
         'form': form,
     })
+
+def athletes(request):
+    members = Member.objects.all()
+    with open('members.csv', 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        next(reader)  # Skips header row
+        members = list(reader)
+    return render(request, 'mains/athletes.html', 
+    {
+        'members': members,
+    })
