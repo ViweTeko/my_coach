@@ -201,7 +201,7 @@ def search_events(request) -> render:
 
 # VENUE Downloads
 
-def venue_text(request) -> response:
+def venue_text(request):
     """ This will generate Text File List"""
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename="venue_list.txt"'
@@ -210,7 +210,7 @@ def venue_text(request) -> response:
         response.write(venue.name + '\n')
     return response
 
-def venue_csv(request) -> response:
+def venue_csv(request):
     """ This will generate Comma Separated Values (CSV) file"""
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="venue_list.csv"'
@@ -222,7 +222,7 @@ def venue_csv(request) -> response:
         writer.writerow(venue.name, venue.address, venue.zip_code, venue.web, venue.phone)
     return response
 
-def venue_pdf(request) FileResponse:
+def venue_pdf(request):
     """This will generate PDF file"""
     buf = io.BytesIO()
     c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
@@ -304,20 +304,20 @@ def show_event(request):
 
 def contact_us(request):
     """This will contact us"""
-  if request.method == 'POST':
-    name = request.POST.get('name')
-    email = request.POST.get('email')
-    message = request.POST.get('message')
-    # Send email
-    send_mail(
-        'Contact Form Submission',
-        f'Name: {name}\nEmail: {email}\n\n{message}',
-        email,
-        ['iamviwe.teko@gmail.com'],
-        fail_silently=False,
-    )
-    return redirect('contact_success') # Redirects to success page
-  return render(request, 'admin/contact_us.html')
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        # Send email
+        send_mail(
+            'Contact Form Submission',
+            f'Name: {name}\nEmail: {email}\n\n{message}',
+            email,
+            ['iamviwe.teko@gmail.com'],
+            fail_silently=False,
+        )
+        return redirect('contact_success') # Redirects to success page
+    return render(request, 'admin/contact_us.html')
 
 def contact_success(request):
     """This will show a success message"""
