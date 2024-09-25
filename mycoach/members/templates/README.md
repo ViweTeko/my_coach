@@ -1,1 +1,1 @@
-This is the templates directory for the memebers app.
+This is the templates directory for the members app.
