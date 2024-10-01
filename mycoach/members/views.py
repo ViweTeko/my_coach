@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm
+from .models import Member
+import csv
 
 
 def login_user(request):
@@ -50,6 +52,7 @@ def register_user(request):
     })
 
 def athletes(request):
+    """This renders the athletes page"""
     members = Member.objects.all()
     with open('members.csv', 'r', encoding='utf-8') as file:
         reader = csv.reader(file)
@@ -58,4 +61,30 @@ def athletes(request):
     return render(request, 'mains/athletes.html', 
     {
         'members': members,
+    })
+
+def add_athlete(request):
+    """This renders the add athlete page"""
+    submitted = False
+    if request.method == 'POST':
+        form = AthleteForm(request.POST, request.FILES)
+        if form.is_valid():
+            athlete = form.save(commit=False)
+            athlete.name = request.user.id # User that's logged in
+            athlete.save()
+            return HttpResponseRedirect('/add_athlete?submitted=True')
+    else:
+        form = AthleteForm()
+        if 'submitted' in request.GET:
+            submitted = True
+    return render(request, 'mains/add_athlete.html', {
+        'form': form,
+        'submitted': submitted
+    })
+
+def view_athlete(request):
+    """This shows the selected athlete on a separate page"""
+    athlete = Member.objects.get(pk=id)
+    return render(request, 'mains/view_athlete.html', {
+        'athlete': athlete,
     })

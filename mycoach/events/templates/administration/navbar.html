@@ -8,9 +8,22 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'athletes' %}">Athletes</a>
+            <a class="nav-link" href="">Athletes</a>
           </li>
-          
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Athlete
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              <li><a class="dropdown-item" href="{% url 'athletes' %}">Athletes</a></li>
+              {% if user.is_authenticated %}
+              <li><a class="dropdown-item" href="{% url 'add-athlete' %}">Add Athlete</a></li>
+              <li><a class="dropdown-item" href="{% url 'view-athlete' %}">View Athlete</a></li>
+              {% endif %}
+            </ul>
+          </li>
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Events

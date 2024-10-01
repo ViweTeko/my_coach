@@ -34,7 +34,7 @@ def home(request, year=datetime.now().year, month=datetime.now() .strftime('%B')
         event_date__month = month_num
         )
     return render(request,
-    'admin/home.html', {
+    'administration/home.html', {
         "name": name,
         "year": year,
         "month": month,
@@ -317,8 +317,8 @@ def contact_us(request):
             fail_silently=False,
         )
         return redirect('contact_success') # Redirects to success page
-    return render(request, 'admin/contact_us.html')
+    return render(request, 'administration/contact_us.html')
 
 def contact_success(request):
     """This will show a success message"""
-    return render(request, 'admin/contact_success.html')
+    return render(request, 'administration/contact_success.html')
