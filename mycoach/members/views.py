@@ -54,14 +54,18 @@ def register_user(request):
 def athletes(request):
     """This renders the athletes page"""
     members = Member.objects.all()
-    with open('members.csv', 'r', encoding='utf-8') as file:
-        reader = csv.reader(file)
-        next(reader)  # Skips header row
-        members = list(reader)
-    return render(request, 'mains/athletes.html', 
-    {
-        'members': members,
-    })
+    try:
+        with open('members.csv', 'r', encoding='utf-8') as file:
+            reader = csv.reader(file)
+            next(reader)  # Skips header row
+            members = list(reader)
+        return render(request, 'mains/athletes.html', 
+        {
+            'members': members,
+        })
+    except FileNotFoundError:
+        messages.error(request, 'File not found')
+        return redirect('home')
 
 def add_athlete(request):
     """This renders the add athlete page"""
