@@ -1,0 +1,36 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+
+<center>
+    <div class='card'>
+        <div class="card-header">
+            Athlete
+        </div>
+        <div class='card-body'>
+            
+            <h5 class='card-title'>{{ athlete.name }} {{ athlete.surname }}</h5>
+            {% if athlete.gender %}
+            <p class='card-text'>{{ athlete.gender }}</p>
+            {% endif %}
+            {% if athlete.age %}
+            <p class='card-text'>{{ athlete.age }}</p>
+            {% endif %}
+            {% if athlete.club %}
+            <p class='card-text'>{{ athlete.club }}</p>
+            {% endif %}
+            {% if athlete.athlete_event %}
+            <p class='card-text'>{{ athlete.athlete_event }}</p>
+            {% endif %}
+
+            {% if athlete.athlete_image %}
+                <img src='{{ athlete.athlete_image.url }}'>
+            {% endif %}
+        </div>
+    </div>
+<br/>
+
+<br/><br/><br/>
+</center>
+
+{% endblock %}
