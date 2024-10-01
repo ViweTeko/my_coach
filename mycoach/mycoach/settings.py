@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '8000-idx-mycoachgit-1725684632282.cluster-ve345ymguzcd6qqzuko2qbxtfe.cloudworkstations.dev',
+    '127.0.0.1',
+    'localhost',
 ]
 
 

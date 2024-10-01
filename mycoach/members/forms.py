@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django import forms
 from django.forms import ModelForm, HiddenInput
-from .models import Athlete
+from .models import Member
 
 
 class RegisterUserForm(UserCreationForm):
@@ -42,7 +42,7 @@ class AthleteForm(ModelForm):
     """This class is the athlete form"""
     class Meta:
         """Meta class"""
-        model = Athlete
+        model = Member
         fields = '__all__'
         labels = {
             'id': '',
